@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.TreeMap;
+import java.util.HashMap;
 
 @Service
 public class Classifier {
@@ -21,7 +21,7 @@ public class Classifier {
         FileInputStream inputStream = utils.multipartFileToFileInputStream(multipartFile);
         String document = utils.readDocument(inputStream);
 
-        TreeMap<String, Integer> freqTable = utils.convertToFreqTable(document);
+        HashMap<String, Integer> freqTable = utils.convertToFreqTable(document);
 
         for(String k : freqTable.keySet()) {
             System.out.println(k + " : " + freqTable.get(k));

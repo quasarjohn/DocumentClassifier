@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
@@ -51,10 +53,10 @@ public class Utils {
         return extractor.getText();
     }
 
-    public TreeMap<String, Integer> convertToFreqTable(String document) {
+    public HashMap<String, Integer> convertToFreqTable(String document) {
         document = document.replaceAll("[^A-Za-z0-9]", " ");
         String[] corpora = document.split("\n");
-        TreeMap<String, Integer> freqTable = new TreeMap<>();
+        HashMap<String, Integer> freqTable = new HashMap<>();
         for (String line : corpora) {
             line = line.trim();
 
@@ -63,13 +65,34 @@ public class Utils {
             //END clean document
 
             String[] lexemes = line.split(" ");
-            for(String lexeme : lexemes) {
-                if(freqTable.get(lexeme) == null)
+            for (String lexeme : lexemes) {
+                if (freqTable.get(lexeme) == null)
                     freqTable.put(lexeme, 1);
                 else
                     freqTable.put(lexeme, freqTable.get(lexeme) + 1);
             }
         }
         return freqTable;
+    }
+
+    public HashMap<String, Integer> mergeFreqTables
+            (ArrayList<HashMap<String, Integer>> freqTables) {
+
+        HashMap<String, Integer> mergedMap = new HashMap<>();
+
+        for (int i = 0; i < freqTables.size(); i++) {
+            HashMap<String, Integer> freqTable = freqTables.get(i);
+            if (i == 0)
+                mergedMap.putAll(freqTable);
+            else {
+                for (String k : freqTable.keySet()) {
+                    if (mergedMap.get(k) == null)
+                        mergedMap.put(k, freqTable.get(k));
+                    else
+                        mergedMap.put(k, freqTable.get(k) + mergedMap.get(k));
+                }
+            }
+        }
+        return mergedMap;
     }
 }

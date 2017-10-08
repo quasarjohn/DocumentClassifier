@@ -1,25 +1,35 @@
 package com.berstek.models;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
-//@Entity
-public class Lexeme {
+@Entity
+@Table(name = "frequency_table")
+public class Lexeme implements Serializable{
 
-//    @Column
-    private String parent_document;
-//    @Column
+    @Column
+    @Id
+    private String category;
+
+    @Column
+    @Id
+    private String document;
+
+    @Column
     private String word;
-//    @Column
+
+    @Column
     private Integer frequency;
 
-    public String getParent_document() {
-        return parent_document;
+    public String getCategory() {
+        return category;
     }
 
-    public void setParent_document(String parent_document) {
-        this.parent_document = parent_document;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getWord() {
@@ -36,5 +46,13 @@ public class Lexeme {
 
     public void setFrequency(Integer frequency) {
         this.frequency = frequency;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    public void setDocument(String document) {
+        this.document = document;
     }
 }

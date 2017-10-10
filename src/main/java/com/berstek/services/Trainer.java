@@ -1,6 +1,5 @@
 package com.berstek.services;
 
-import com.berstek.models.Lexeme;
 import com.berstek.models.MergedFreqTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeMap;
 
 @Service
 public class Trainer {
@@ -21,6 +19,9 @@ public class Trainer {
 
     @Autowired
     private UnzipService unzipService;
+
+    @Autowired
+    FreqTableService freqTableService;
 
     public boolean train(MultipartFile multipartFile) throws IOException {
 
@@ -62,8 +63,11 @@ public class Trainer {
             HashMap<String, Integer> map = freqTable.getFreqTable();
             for (String k : map.keySet()) {
                 System.out.println(k + " : " + map.get(k));
+                freqTableService.saveFreqTable(freqTable.getCategory(), k, map.get(k));
             }
         }
+
+        //TODO dimensionality reduction
 
         return true;
     }

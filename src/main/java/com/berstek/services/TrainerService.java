@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @Service
-public class Trainer {
+public class TrainerService {
 
     @Autowired
     private Utils utils;

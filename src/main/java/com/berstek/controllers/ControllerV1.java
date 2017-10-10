@@ -1,9 +1,9 @@
 package com.berstek.controllers;
 
 import com.berstek.models.Classification;
-import com.berstek.models.ReturnObject;
-import com.berstek.services.Classifier;
-import com.berstek.services.Trainer;
+import com.berstek.services.ClassifierService;
+import com.berstek.services.FreqTableService;
+import com.berstek.services.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +17,11 @@ import java.io.IOException;
 public class ControllerV1 {
 
     @Autowired
-    private Classifier classifier;
+    private ClassifierService classifier;
 
     @Autowired
-    private Trainer trainer;
+    private TrainerService trainer;
+
 
     @PostMapping("/classifier")
     @CrossOrigin(origins = "http://localhost:3000")
